@@ -2,9 +2,17 @@
 <html>
   <head>
     <title>Movies API Docs</title>
-    <script src="https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/redoc@2.1.3/bundles/redoc.standalone.js"></script>
   </head>
   <body>
-    <redoc spec-url="movies_api.yaml"></redoc>
+    <div id="redoc-container"></div>
+    <script>
+      Redoc.init('/movies_api.yaml', {
+        scrollYOffset: 50,
+        hideDownloadButton: false,
+      }, document.getElementById('redoc-container'));
+    </script>
   </body>
 </html>
