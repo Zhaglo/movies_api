@@ -13,6 +13,11 @@ let movies = [
 ];
 let nextId = 4;
 
+const path = require("path");
+
+// Раздача статических файлов из корня проекта
+app.use(express.static(path.join(__dirname)));
+
 app.get("/", (req, res) => {
   res.send("Movies API is running ✅");
 });
