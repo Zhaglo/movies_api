@@ -22,6 +22,11 @@ app.get("/", (req, res) => {
   res.send("Movies API is running ✅");
 });
 
+app.get("/movies_api.yaml", (req, res) => {
+  res.setHeader("Content-Type", "text/yaml");
+  res.sendFile(path.join(__dirname, "movies_api.yaml"));
+});
+
 // CREATE — добавление фильма
 app.post("/movies", (req, res) => {
     const { title, year, rating } = req.body;
