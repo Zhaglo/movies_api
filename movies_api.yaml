@@ -1,0 +1,113 @@
+openapi: 3.0.1
+info:
+  title: Movies API
+  version: 1.0.0
+  description: API для управления фильмами (Movies CRUD)
+servers:
+  - url: https://movies-api-phzu.onrender.com
+paths:
+  /movies:
+    get:
+      summary: Получить список фильмов
+      responses:
+        '200':
+          description: Список фильмов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+    post:
+      summary: Добавить фильм
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieInput'
+      responses:
+        '201':
+          description: Фильм создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+  /movies/{id}:
+    get:
+      summary: Получить фильм по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Информация о фильме
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: Фильм не найден
+    put:
+      summary: Обновить фильм
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieInput'
+      responses:
+        '200':
+          description: Фильм обновлён
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: Фильм не найден
+    delete:
+      summary: Удалить фильм
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Фильм удалён
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        year:
+          type: integer
+        rating:
+          type: number
+          format: float
+    MovieInput:
+      type: object
+      properties:
+        title:
+          type: string
+        year:
+          type: integer
+        rating:
+          type: number
+          format: float
+      required:
+        - title
