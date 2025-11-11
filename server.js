@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
 app.get("/movies_api.yaml", (req, res) => {
   res.setHeader("Content-Type", "application/yaml; charset=utf-8");
   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cache-Control", "no-store"); // 🚫 Отключаем кэширование
   res.sendFile(path.join(__dirname, "movies_api.yaml"));
 });
 
