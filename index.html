@@ -34,6 +34,7 @@
         div.className = 'movie';
         div.innerHTML = `
           <b>${m.title}</b> (${m.year}) — Рейтинг: ${m.rating}
+          <button onclick="editMovie(${m.id})">Редактировать</button>
           <button onclick="deleteMovie(${m.id})">Удалить</button>
         `;
         container.appendChild(div);
@@ -45,17 +46,42 @@
       const year = +document.getElementById('year').value;
       const rating = +document.getElementById('rating').value;
 
+      if (!title) { alert("Название обязательно"); return; }
+
       await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, year, rating })
       });
 
+      document.getElementById('title').value = '';
+      document.getElementById('year').value = '';
+      document.getElementById('rating').value = '';
       fetchMovies();
     }
 
     async function deleteMovie(id) {
       await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+      fetchMovies();
+    }
+
+    async function editMovie(id) {
+      const title = prompt("Новое название фильма:");
+      const year = prompt("Новый год:");
+      const rating = prompt("Новый рейтинг:");
+
+      if (!title && !year && !rating) return;
+
+      await fetch(`${API_URL}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: title || undefined,
+          year: year ? +year : undefined,
+          rating: rating ? +rating : undefined
+        })
+      });
+
       fetchMovies();
     }
 
