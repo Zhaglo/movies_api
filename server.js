@@ -6,8 +6,16 @@ app.use(express.json());
 app.use(cors());
 
 // "База данных" в памяти
-let movies = [];
-let nextId = 1;
+let movies = [
+  { id: 1, title: "Matrix", year: 1999, rating: 8.7 },
+  { id: 2, title: "Inception", year: 2010, rating: 8.8 },
+  { id: 3, title: "Interstellar", year: 2014, rating: 8.6 }
+];
+let nextId = 4;
+
+app.get("/", (req, res) => {
+  res.send("Movies API is running ✅");
+});
 
 // CREATE — добавление фильма
 app.post("/movies", (req, res) => {
